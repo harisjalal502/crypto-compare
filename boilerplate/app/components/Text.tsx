@@ -1,5 +1,5 @@
 import i18n from "i18n-js"
-import React from "react"
+import React, { ForwardedRef, PropsWithChildren, forwardRef } from "react"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
 import { isRTL, translate, TxKeyPath } from "../i18n"
 import { colors, typography } from "../theme"
@@ -51,7 +51,10 @@ export interface TextProps extends RNTextProps {
  * @param {TextProps} props - The props for the `Text` component.
  * @returns {JSX.Element} The rendered `Text` component.
  */
-export function Text(props: TextProps) {
+export const Text = forwardRef(function Text(
+  props: PropsWithChildren<TextProps>,
+  ref: ForwardedRef<RNText | null>,
+) {
   const { weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
 
   const i18nText = tx && translate(tx, txOptions)
@@ -67,11 +70,11 @@ export function Text(props: TextProps) {
   ]
 
   return (
-    <RNText {...rest} style={$styles}>
+    <RNText {...rest} style={$styles} ref={ref}>
       {content}
     </RNText>
   )
-}
+})
 
 const $sizeStyles = {
   xxl: { fontSize: 36, lineHeight: 44 } satisfies TextStyle,
