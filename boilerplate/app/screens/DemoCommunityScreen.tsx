@@ -1,5 +1,5 @@
-import React, { FC } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import React, { FC, useRef } from "react"
+import { Image, ImageStyle, TextStyle, View, ViewStyle, Text as RNText } from "react-native"
 import { ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { spacing } from "../theme"
@@ -13,9 +13,11 @@ const reactNativeNewsletterLogo = require("../../assets/images/demo/rnn-logo.png
 
 export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
   function DemoCommunityScreen(_props) {
+    const textRef = useRef<RNText | null>(null)
+
     return (
       <Screen preset="scroll" contentContainerStyle={$container} safeAreaEdges={["top"]}>
-        <Text preset="heading" tx="demoCommunityScreen.title" style={$title} />
+        <Text preset="heading" tx="demoCommunityScreen.title" style={$title} ref={textRef} />
         <Text tx="demoCommunityScreen.tagLine" style={$tagline} />
 
         <Text preset="subheading" tx="demoCommunityScreen.joinUsOnSlackTitle" />
